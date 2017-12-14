@@ -72,6 +72,20 @@ function (odata) {
                 d.y = counts[num]
             })
 
+                        countryGroup = countryDim.group(),
+            counts = catGroup.reduceCount().all(),
+            countByGroup = {};
+
+        Array.prototype.slice.call(counts).forEach(function(d) { countByGroup[d.key] = d.value; })
+    
+        var catMean = catGroup.reduceSum(function(d) {
+            if (countByGroup[d.group] == 0)
+                return 0
+            return +d.nAdd / countByGroup[d.group]; 
+        });
+
+        categories.dimension(catMean)
+
             // function(d) {
             //     console.log(d)
             //     num = d.key[2].nAdd;
@@ -119,6 +133,7 @@ function (odata) {
             .group(catGroup)
             .width(350)
             .height(300)
+            .elasticX(true)
             // .elasticX(true)
             // .x(d3.scale.ordinal())
             // .xUnits(dc.units.ordinal)
@@ -126,6 +141,7 @@ function (odata) {
             .gap(0.1)
             .ordering(function(d) { return -d.value;})
             .on("filtered", function(chart, filter) { updateY()})
+
         scatter
             .dimension(addDim)
             .group(function(d) { return d.productName;})
@@ -168,6 +184,15 @@ function (odata) {
 
         //scatter.render();
         dc.renderAll();
+
+        categories.svg()
+            .append("text")
+                .attr("class", "x-axis-label")
+                .attr("text-anchor", "middle")
+                .attr("x", categories.width()/2)
+                .attr("y", categories.height())
+                .text("Nombre moyen d'additifs");
+
         next()
         last()
         update()
