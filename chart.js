@@ -14,7 +14,7 @@ function (odata) {
                 num = +d["Additives N"]
                 counts[num] = counts[num] ? counts[num] + 1 : 1;
                 
-                if (data.length < 50)
+                if (data.length < 100)
                 {
                     data.push({
                         nAdd : +d["Additives N"],
@@ -27,9 +27,6 @@ function (odata) {
                 }
             }
         })
-
-        var w = 300
-        var h = 300
         
         var categories = dc.barChart("#categories");
         var scatter = dc.dataTable("#scatter")
@@ -53,8 +50,8 @@ function (odata) {
         });
 
         country
-        .width(300)
-        .height(300)
+        .width(400)
+        .height(400)
         .dimension(countryDim)
         .group(countryGroup)
         .innerRadius(50)
@@ -63,8 +60,8 @@ function (odata) {
         categories
             .dimension(catDim)            
             .group(catGroup)
-            .width(900)
-            .height(800)
+            .width(750)
+            .height(500)
             .elasticX(true)
             .x(d3.scale.ordinal())
             .xUnits(dc.units.ordinal)
@@ -76,16 +73,16 @@ function (odata) {
         scatter
             .dimension(addDim)
             .group(function(d) { return d.productName;})
-            .width(600)
-            .height(800)
+            .width(700)
+            .height(1000)
             .sortBy(function(d) { return +d.nAdd; })
             .showGroups(false)
             .columns([{
-                        label: 'productName',
+                        label: 'Nom du produit',
                         format: function(d) {
                             return  d.productName;
                             }
-                        },'group',
+                        },
                       {
                           label: 'Categorie',
                           format: function(d) {
