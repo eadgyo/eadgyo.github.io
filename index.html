@@ -16,7 +16,7 @@
   </head>
   <body>
 <div id="page">
-		<div id="logo">
+    <div id="logo">
 			<h1><a href="/" id="logoLink"><b>L'art des additifs et du choix des labels</b></a></h1>
 		</div>
 		<div id="content">
@@ -40,15 +40,49 @@
       </p>
     
 		</div>
-
-    <div id="content" style="height: 1750px">
+    <div id="content" style="padding: 0% 10%" >
       <h2>Vue interactive</h2>
-      <h3>Catégories</h3>
-      <div id="categories" width="800px" style="font-size: 70%"></div>
-      <h3>Pays</h3>
-      <div id="country" style = "margin-left: 20%; margin:10px 20%"></div>
+      <div class="row">
+        <div class="dc-chart"> 
+          <h3>Produits</h3>
+          <div id="detail"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="dc-chart"> 
+          <h3>Catégories</h3>
+          <div id="categories"></div>
+        </div>
+
+        <div class="dc-chart"> 
+          <h3>Pays</h3>
+          <div id="country"></div>
+        </div>
+      </div>
+      <div class="row">
+      <div class="dc-chart"> 
       <h3>Données</h3>
-      <div id="scatter"></div>
+     
+     <div style="width: 600px; height: 800px">
+     <table id='scatter' style="width: 600px" class="table table-bordered table-hover table-striped">
+            <thead>
+            <tr class='header'>
+              <th width="250px">Nom produit</th>
+              <th width="100px">Categorie</th>
+              <th width="50px">Nombre additifs</th>
+              <th width="200px">Marque</th>>
+            </tr>
+            </thead>
+        </table>
+    </div>
+      <div id="paging" style="clear: both">
+    Showing <span id="begin"></span>-<span id="end"></span> of <span id="size"></span>.
+    <input id="last" class="btn" type="Button" value="Last" onclick="javascript:last()" />
+    <input id="next" class="btn" type="button" value="Next" onclick="javascript:next()"/>
+    </div>
+    </div>
+  </div>
+
 
 
  <script type='text/javascript' src='chart.js'></script>
@@ -92,10 +126,11 @@
     </div>
     <div id="content">
 			<h1>Annexes</h1>
-      <h2>Critique du jeu de données:</h2>
+      <h2>Analyse du jeu de données:</h2>
 			<p>
       Notre jeu de données est assez volumineux. Sa construction, réalisée par des utilisateurs, n'est cependante pas très rigoureuse. Certaines descriptions sont partielles. Pour d'autres cas, les catégories et les marques existent sous plusieurs formes proches (nom de marque raccourci, choix des tags différents). Ces défauts ont impactés nos résultats. 
       </p>
+      <p> Deux colonnes ont été crées pour rassembler des catégories et des pays. </p>
 		</div>
     
     

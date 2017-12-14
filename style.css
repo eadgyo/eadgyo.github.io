@@ -10,7 +10,7 @@ h1, h2, h3, h4{
 
 	font-family: Helvetica, Arial, sans-serif;
 }
-h1{ font-size: 2.5em;
+h1{ font-size: 2.2em;
 	text-align: center;
 	  margin-left: auto;
   margin-right: auto;
@@ -20,7 +20,6 @@ a{
 	color: #3584ff;
 	text-decoration: none;
 }
-	a:hover,
 
 /* you can structure your code's white space so that it is as readable for when you come back in the future or for other people to read and edit quickly */
 
@@ -63,7 +62,9 @@ width: 960px;
 				box-shadow: 0px 1px 1px #666;
 			}
 			#nav ul li a:active{ background-color: #75c5ff; }
-
+.dc-chart g.row text {
+    fill: black;
+}
 #content p {
 	line-height: 1.6em;
 	text-align: justify;
