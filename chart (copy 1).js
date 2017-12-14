@@ -1,4 +1,33 @@
-
+function multikey(x,y) {
+    console.log( x + 'x' + y)
+    return x + 'x' + y;
+}
+function splitkey(k) {
+    return k.split('x');
+}
+function stack_second(group) {
+    return {
+        all: function() {
+            var all = group.all(),
+                m = {};
+            // build matrix from multikey/value pairs
+            all.forEach(function(kv) {
+                var ks = splitkey(kv.key);
+                m[ks[0]] = m[ks[0]] || {};
+                m[ks[0]][ks[1]] = kv.value;
+            });
+            // then produce multivalue key/value pairs
+            return Object.keys(m).map(function(k) {
+                return {key: k, value: m[k]};
+            });
+        }
+    };
+}
+function sel_stack(i) {
+    return function(d) {
+        return d.value[i];
+    };
+}
 d3.csv('data.csv', 
 function (odata) {
     var obligKey = ["Additives N", "Brands", "Product Name", "Groupes", "Countries Fr (group)"]
@@ -14,7 +43,7 @@ function (odata) {
                 num = +d["Additives N"]
                 counts[num] = counts[num] ? counts[num] + 1 : 1;
                 
-                if (data.length < 50)
+                if (data.length < 10)
                 {
                     data.push({
                         nAdd : +d["Additives N"],
@@ -32,17 +61,24 @@ function (odata) {
         var h = 300
         
         var categories = dc.barChart("#categories");
-        var scatter = dc.dataTable("#scatter")
-        //var detail = dc.pieChart("#detail");
-        var country = dc.pieChart("#country");
+        var scatter = dc.barChart("#scatter")
+        //var detail = dc.scatterPlot("#detail");
+        //var country = dc.scatterPlot("#country");
            
         var ndx = crossfilter(data),
-            addDim = ndx.dimension(function(d) {return +d.nAdd}),
+        runExptDim = ndx.dimension(function(d) { return multikey(d.nAdd, d.y); }),
+        runExptGroup = runExptDim.group().reduceSum(function(d) {
+            return 1;
+        });
+        console.log(runExptGroup.all())
+        
+        var addDim = ndx.dimension(function(d) {return multikey(+d.nAdd, d.y);}),
+            addGroup = addDim.group().reduceSum(function(d) {
+                return 1;
+            }),
+            stackedGroup = stack_second(addGroup),
             catDim = ndx.dimension(function(d) {return d.group}),
-            countryDim = ndx.dimension(function(d) { return d.country;}),
-            addGroup = addDim.group(),
             catGroup = catDim.group(),
-            countryGroup = countryDim.group(),
             counts = catGroup.reduceCount().all(),
             countByGroup = {};
 
@@ -52,61 +88,30 @@ function (odata) {
             return +d.nAdd / countByGroup[d.group]; 
         });
 
-        country
-        .width(300)
-        .height(300)
-        .dimension(countryDim)
-        .group(countryGroup)
-        .innerRadius(50)
-        .controlsUseVisibility(true);
-
         categories
-            .dimension(catDim)            
-            .group(catGroup)
-            .width(w)
-            .height(h)
             .elasticX(true)
             .x(d3.scale.ordinal())
             .xUnits(dc.units.ordinal)
             .controlsUseVisibility(true)
             .barPadding(0.1)
             .outerPadding(0.05)
+            .dimension(catMean)            
+            .group(catGroup)
             .ordering(function(d) { return -d.value;}); 
         
+        var xScale = d3.scale.linear()
+        .domain([
+            d3.min([0,d3.min(data, function (d) { return d.nAdd })]),
+            d3.max([0,d3.max(data, function (d) { return d.nAdd })])
+            ]);
         scatter
+            .x(xScale)
+            .brushOn(false)
             .dimension(addDim)
-            .group(function(d) { return d.productName;})
-            .width(600)
-            .height(400)
-            .sortBy(function(d) { return +d.nAdd; })
-            .showGroups(false)
-            .columns([{
-                        label: 'productName',
-                        format: function(d) {
-                            return  d.productName;
-                            }
-                        },'group',
-                      {
-                          label: 'Categorie',
-                          format: function(d) {
-                              return d.group;
-                          }
-                      },
-                      {
-                        label: 'Nombres additifs',
-                        format: function(d) {
-                            return "  " + d.nAdd;
-                        }
-                      },
-                      {
-                          label: 'Marque',
-                          format: function(d) {
-                              return d.brand;
-                          }
-                      }]);
-
-        //scatter.render();
-        dc.renderAll();
+            .group(stackedGroup, "1", sel_stack('1'));
+        
+        scatter.render();
+        //dc.renderAll();
         //brands.xAxis().tickFormat(function(d) {return d*10}); // convert back to base unit
         //brands.yAxis.ticksFormat(function(d) {return d});
 
