@@ -68,6 +68,7 @@ function (odata) {
             .controlsUseVisibility(true)
             .barPadding(0.1)
             .outerPadding(0.05)
+            .yAxisLabel('Nombre moyen additifs')
             .ordering(function(d) { return -d.value;}); 
         
         scatter
