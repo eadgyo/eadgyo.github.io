@@ -1,3 +1,4 @@
+
 var scatter;
 var ndx;
 d3.csv('data.csv', 
@@ -44,10 +45,10 @@ function (odata) {
             addGroup = addDim.group(),
             catGroup = catDim.group(),
             countryGroup = countryDim.group(),
-            counts = catGroup.reduceCount().all(),
+            countsCat = catGroup.reduceCount().all(),
             countByGroup = {};
 
-        Array.prototype.slice.call(counts).forEach(function(d) { countByGroup[d.key] = d.value; })
+        Array.prototype.slice.call(countsCat).forEach(function(d) { countByGroup[d.key] = d.value; })
     
         var catMean = catGroup.reduceSum(function(d) {
             return +d.nAdd / countByGroup[d.group]; 
@@ -71,19 +72,12 @@ function (odata) {
                 d.y = counts[num]
             })
 
-                        countryGroup = countryDim.group(),
-            counts = catGroup.reduceCount().all(),
+            countryGroup = countryDim.group(),
+            countsCat = catGroup.reduceCount().all(),
             countByGroup = {};
 
-        Array.prototype.slice.call(counts).forEach(function(d) { countByGroup[d.key] = d.value; })
-    
-        var catMean = catGroup.reduceSum(function(d) {
-            if (countByGroup[d.group] == 0)
-                return 0
-            return +d.nAdd / countByGroup[d.group]; 
-        });
+            Array.prototype.slice.call(countsCat).forEach(function(d) { countByGroup[d.key] = d.value; })
 
-        categories.dimension(catMean)
 
             // function(d) {
             //     console.log(d)
@@ -128,11 +122,12 @@ function (odata) {
             .controlsUseVisibility(true)
 
         categories
-            .dimension(catDim)            
+            .dimension(catMean)            
             .group(catGroup)
             .width(350)
             .height(300)
             .elasticX(true)
+            .valueAccessor(function(d) {return d.value/countByGroup[d.key]})
             // .elasticX(true)
             // .x(d3.scale.ordinal())
             // .xUnits(dc.units.ordinal)
@@ -189,7 +184,8 @@ function (odata) {
                 .attr("class", "x-axis-label")
                 .attr("text-anchor", "middle")
                 .attr("x", categories.width()/2)
-                .attr("y", categories.height())
+                .attr("y", categories.height() - 3.0)
+                .attr("font-size", "0.7em")
                 .text("Nombre moyen d'additifs");
 
         next()
@@ -230,3 +226,7 @@ function last() {
     update();
     scatter.redraw();
 }
+
+
+
+ 
