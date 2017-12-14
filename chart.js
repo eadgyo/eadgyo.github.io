@@ -91,7 +91,7 @@ function (odata) {
                           }
                       },
                       {
-                        label: 'Nombres additifs',
+                        label: 'Nombre additifs',
                         format: function(d) {
                             return "  " + d.nAdd;
                         }
