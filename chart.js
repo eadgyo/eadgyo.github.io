@@ -63,8 +63,8 @@ function (odata) {
         categories
             .dimension(catDim)            
             .group(catGroup)
-            .width(w)
-            .height(h)
+            .width(900)
+            .height(800)
             .elasticX(true)
             .x(d3.scale.ordinal())
             .xUnits(dc.units.ordinal)
@@ -77,7 +77,7 @@ function (odata) {
             .dimension(addDim)
             .group(function(d) { return d.productName;})
             .width(600)
-            .height(400)
+            .height(800)
             .sortBy(function(d) { return +d.nAdd; })
             .showGroups(false)
             .columns([{

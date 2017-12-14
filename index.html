@@ -6,11 +6,120 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter2/1.4.0-alpha.6/crossfilter.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/dc/2.1.1/dc.js"></script>
     
+    <title>L'art des additifs et du choix des labels</title>
+    
+    <meta name="author" content="Ronan Jamet, Apoorv Baijal, Vincent Bonnevalle" />
+
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/dc.css"/>
     <link rel='stylesheet' href='style.css'>
   </head>
   <body>
+<div id="page">
+		<div id="logo">
+			<h1><a href="/" id="logoLink"><b>L'art des additifs et du choix des labels</b></a></h1>
+		</div>
+		<div id="content">
+			<h2>Introduction</h2>
+			<p>
+				Nous choississons souvent nos produits en fonction de mots clés. "Le bio", "Sans hallergène", "Durée 24heures". Beaucoup de nos produits utilisent des labelles pour mettre en valeur leur principal atout. Malheureusement, à en regarder la liste des additifs, on se rend compte qu'il s'agit que de marketing.
+			</p>
+
+      <p>
+        Nous verrons, les labelles qui sont les plus utilisées sur les produits vendus en France. Et par la suite, les catégories de produits (Cheveux, solaire...) et les marques seront étudiées.
+      </p>
+		</div>
+
+		<div id="content">
+			<h2>Présentation du jeu de données</h2>
+			<p>
+        Plus de 5000 produits ont été répertorié par des utilisateurs. Chaque produit possède une description, notamment sa marque, sa catégorie, le nombre d'additifs qu'il contient, le label utilisé.
+				</p>
+      <p>
+        Pour plus de pertinence, nous avons choisi de filtrer nos données, en supprimant les produits ayant une description incomplète selon nos critères (absence du nombre d'additifs, absence catégorie)
+      </p>
+    
+		</div>
+
+    <div id="content">
+      <div id="categories" width="800px"></div>
+      <div id="scatter"></div>
+      <div id="country"></div>
+
+ <script type='text/javascript' src='chart.js'></script>
+		</div>
+    <div id="content">
+			<h2>Les labels</h2>
+			<p>
+      Face à ces données, nous avons commencé par étudier les labels. On retrouve dans les premières positions, les labels qui "prouvent" l'éfficacité ou les bienfaits du produit ("bio", "Sans paraben", "Testé dermatologiquement"). Certains labels mettent en avant leur origine (Point vert), d'autres les dangers (Facilement inflammable).  
+      </p>
+      <p>
+        C'est dans l'hygiène qu'on trouve le plus de labels différents.
+      </p>
+
+      <img src="Dashboard2.png" alt="Labels" width="728px">
+		</div>
+    
+     <div id="content">
+			<h2>Les marques</h2>
+			<p>
+      Par la suite, nous avons décider de passer à l'envers du décors, les additifs. À l'inverse des labels qui sont bien visibles, la liste des additifs est souvent dissimulée en petite police. Tout pour empêcher le consommateur d'y prendre intérêt.
+      </p>
+      <p>
+       La majeure partie des produits viennent de France. Les marques de produits capillaires sont ceux qui utilisent le plus d'additifs, surtout pour les marques Grand publique Garnier et Schwarzkopf. On retrouve aussi le secteur des produits pour l'épilation.
+      </p>
+
+      <img src="Dashboard1.png" alt="Marques" width="728px">
+		</div>
+    
+
+		<div id="footer">
+			<p>
+				Ronan Jamet, Apoorv Baijal, Vincent Bonnevalle
+			</p>
+		</div>
+    <div style="height:50px">
+    </div>
+    <div id="content">
+			<h1>Annexes</h1>
+      <h2>Critique du jeu de données:</h2>
+			<p>
+      Notre jeu de données est assez volumineux. Sa construction, réalisée par des utilisateurs, n'est cependante pas très rigoureuse. Certains descriptions sont partielles. Pour d'autres cas, les catégories et les marques subissent existent sous plusieurs formes prochent (nom de marque raccourci, choix des tags différents). Ces défauts ont impactés nos résultats. 
+      </p>
+		</div>
+    
+    
+    <div id="content">
+      <h2>Questions:</h2>
+			
+      <p>Quels labels sont les plus utilisés?</p>
+      <p>Quelle marque utilise le plus de labels distincts?</p>
+      <p>Quelles catégories utilisent en moyenne le plus d'additifs?</p>
+      <p>Quelles marques utilisent en moyenne le plus d'additifs?</p>
+      <p>D'ou viennent nos produits?</p>
+  
+		</div>
+
+    <div id="content">
+      <h2>Maquette vue connecté</h2>
+      Maquette vue connectée
+    </div>
+
+    <div id="content">
+    <h2>Technologies utilisées</h2>
+    <p>d3.js</p>
+    <p>Dc pour la vue connectée</p>
+    <p>Tableau</p>
+    </div>
+    
+	</div>
+
+
+
+      <!--<section class="post_top">
+        <h1 style="font-size: 32px; line-height: 44px; font-weight: 500;"> L'art des additifs et du choix des labels. </h1>
+      </section>
+    
       <div class="container">
 
         <div id="categories"/>
@@ -22,6 +131,6 @@
         <div id="country" style="width:150px; height:150px"/>
       </div>
           
-    <script type='text/javascript' src='chart.js'></script>
+    <script type='text/javascript' src='chart.js'></script>-->
   </body>
 </html>
