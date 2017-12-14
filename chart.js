@@ -83,7 +83,6 @@ function (odata) {
             return +d.nAdd / countByGroup[d.group]; 
         });
 
-        categories.dimension(catMean)
 
             // function(d) {
             //     console.log(d)
